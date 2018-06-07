@@ -17,9 +17,6 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
-// first route
-app.get("/", (req, res) => res.send("Hello world!"));
-
 // App routes
 app.use("/api/user", users);
 app.use("/api/profiles", profiles);
