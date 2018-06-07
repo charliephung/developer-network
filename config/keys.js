@@ -1,0 +1,4 @@
+module.exports = {
+    mongoURI: "mongodb://hiep:123456@ds119080.mlab.com:19080/devnetwork",
+    secretOrKey: "hiep"
+}

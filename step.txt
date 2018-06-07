@@ -1,0 +1,106 @@
+#1 
+    app config
+#2 
+    port 
+        home route 
+        app.listen
+#3 
+    config 
+        key.js <= mongoURI
+#4 
+    mongoose connect
+#5 
+    use express router to setup routes
+#6 
+    mkdir routes
+        mkdir api
+            (naming routes.js)
+            users.js
+            profiles.js
+            posts.js
+#7 
+    require api-routes to server.js
+        app.use("api/route", "[route]");
+#8 
+    require express then router in [route].js
+        res.json() at each route 
+        module.exports = router
+#9  
+    mkdir models
+        (naming Model.js)
+        User.js
+            create create Schema then module.exports = mongoose.model("names", NameSchema)
+#10 
+    add body-parser to request data from client in server.js    
+        app.use(bodyParser.urlencoded({extended: false}));
+        app.use(bodyParser.json());
+
+#11 
+    load User model in users route
+    create user.post 
+        (register route)
+            User.findOne email to check if email already exist alert user else create new account
+            Store user info to mongoDB and hash password
+        (login route)
+            User.findOne email to check if email already exist
+            check username and bcypt.compare("type in password", "hash string from returned user")
+            alert if error else create JWT 
+#12
+    jwt = require('jsonwebtoken') /routes/api/users.js
+    In /routes/api/users.js
+        (JWT payload)
+            const payload = { id: userId, name: username} 
+            jwt.sign(
+                payload, 
+                "secretOrKey", 
+                { expiresIn: 3600 }, 
+                (err, token) => {
+                    res.json({
+                        success: true,
+                        token: "Bearer " + token
+                    });
+                });
+
+#13
+    Setting up passport
+    require("passport") in server.js
+    app.use(passport.initialize());
+    // using jwt strategy
+    require("./config/passport")(passport);
+#14
+    In /config/passport.js
+    const JwtStrategy = require("passport-jwt").Strategy;
+    const ExtractJwt = require("passport-jwt").ExtractJwt;
+    const mongoose = require("mongoose");
+    const User = mongoose.model("users");
+    const config = require("../config/keys");
+
+    const opts = {};
+    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+    opts.secretOrKey = config.secretOrKey;
+
+    module.exports = passport => {
+        passport.use(
+            new JwtStrategy(opts, (jwt_payload, done) => {
+                // find user with this token
+                User.findById(jwt_payload.id)
+                .then(user => {
+                        if(user)
+                            // user can be access in req.user 
+                            return done(null, user);
+                        return done(null, false);
+                    }
+                ).catch(err => console.log(err));
+            });
+        );
+    }
+
+#15
+    (Protected route)
+    require passport in users.js
+    add middleware passport.authenticate("jwt", { session: false }) 
+#16
+    mkdir validation    (server site validation)
+        touch register.js
+        touch login.js
+

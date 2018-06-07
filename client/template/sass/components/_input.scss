@@ -1,0 +1,16 @@
+.input {
+    font-size: $font-size-normal;
+    padding: .5rem 2rem;
+    border-radius: 4px;
+    background-color: rgba($color-white, 0.7);
+    font-family: inherit;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: inherit;
+    display: block;
+    width: 100%;
+    &:focus {
+        outline: none;
+        border-bottom: 2px solid $color-grey-dark;
+    }
+}
