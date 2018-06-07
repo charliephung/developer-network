@@ -22,6 +22,8 @@ app.use("/api/user", users);
 app.use("/api/profiles", profiles);
 app.use("/api/posts", posts);
 
+console.log(process.env.NODE_ENV);
+
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {
   // sett static folder
