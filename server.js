@@ -36,6 +36,8 @@ if (process.env.NODE_ENV === "production") {
 
 // DB config
 const db = require("./config/keys").mongoURI;
+console.log(require("./config/keys"));
+
 console.log(db);
 
 // Connect to MongoDB
