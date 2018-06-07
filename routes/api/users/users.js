@@ -27,8 +27,8 @@ const generateId = () => {
 
 // mailing
 // DB config
-const mail = require("../../../config/keys").MAIL;
-const pass = require("../../../config/keys").MAIL_PASS;
+const mail = require("../../../config/keys").mail;
+const pass = require("../../../config/keys").pass;
 const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   service: "gmail",
