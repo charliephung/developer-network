@@ -10,7 +10,8 @@ import isEmpty from "../utils/isEmpty";
 
 export class VerifyPage extends Component {
   static propTypes = {
-    actVerifyUser: PropTypes.func.isRequired
+    actVerifyUser: PropTypes.func.isRequired,
+    actSendCode: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -28,6 +29,10 @@ export class VerifyPage extends Component {
       [e.target.name]: e.target.value
     });
   };
+
+  componentDidMount() {
+    this.props.actSendCode();
+  }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
@@ -78,7 +83,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  actVerifyUser: AuthActions.actVerifyUser
+  actVerifyUser: AuthActions.actVerifyUser,
+  actSendCode: AuthActions.actSendCode
 };
 
 export default connect(

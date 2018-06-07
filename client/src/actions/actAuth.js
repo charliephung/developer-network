@@ -44,7 +44,7 @@ export const actVerifyUser = (code, history) => dispatch => {
     .post("api/user/verify/" + code)
     .then(res => {
       dispatch(actLogoutUser());
-      history.push("/login");
+      history.push("login");
     })
     .catch(err => {
       dispatch({
@@ -52,6 +52,10 @@ export const actVerifyUser = (code, history) => dispatch => {
         payload: err.response.data
       });
     });
+};
+// Sent verify code
+export const actSendCode = () => dispatch => {
+  axios.get("api/user/sendcode");
 };
 
 // Set current user

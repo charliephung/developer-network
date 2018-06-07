@@ -1,3 +1,4 @@
 /node_modules
 package-lock.json
 step.txt
+/config/key_dev.js

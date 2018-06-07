@@ -27,9 +27,12 @@ const generateId = () => {
 
 // mailing
 // DB config
-const mail = require("../../../config/keys").mail;
-const pass = require("../../../config/keys").pass;
 const nodemailer = require("nodemailer");
+const pass = require("../../../config/keys").password;
+const mail = require("../../../config/keys").mail;
+console.log(mail);
+console.log(pass);
+
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -76,22 +79,6 @@ router.post("/register", (req, res) => {
           newUser
             .save()
             .then(user => {
-              // Send verify email
-              const mailOptions = {
-                from: "developernetwork2018@gmail.com",
-                to: newUser.email.toString(),
-                subject: "Verify code",
-                text: newUser.hash.toString()
-              };
-
-              transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                  return res.status(400).json(error);
-                } else {
-                  return res.json({ msg: "Email sent" });
-                }
-              });
-
               return res.json(user);
             })
             .catch(err => console.log(err));
@@ -166,10 +153,10 @@ router.get(
 );
 
 // @route GET api/user/verify/:hash
-// @desc activate user account
+// @desc sent code to user
 // @access Private
-router.post(
-  "/sentcode",
+router.get(
+  "/sendcode",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     User.findById(req.user.id).then(user => {
