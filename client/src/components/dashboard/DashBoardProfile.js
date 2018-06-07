@@ -222,7 +222,17 @@ export class DashBoardProfile extends Component {
                       className="img-fluid m-auto rounded-circle"
                       alt=""
                     />
-                    <div />
+                    <div>
+                      <small>
+                        <a
+                          className="text-muted"
+                          href="https://en.gravatar.com/"
+                        >
+                          Create avatar
+                        </a>
+                      </small>
+                      <div />
+                    </div>
                   </div>
                   <h4 className=" bold text-dark mt-3">{user.name}</h4>
                   <p className="text-muted">{user.email}</p>
